@@ -1,0 +1,17 @@
+;; Hello World server in Clojure
+;; Binds REP socket to tcp://*:5555
+;; Expects "Hello" from client, replies with "World"
+
+(ns zguide.hwserver
+  (:require [zeromq.zmq :as zmq]))
+
+(defn -main []
+  (with-open [context (zmq/context 1)
+              socket (doto (zmq/socket context :rep)
+                       (zmq/bind "tcp://*:5555"))]
+    (while (not (.. Thread currentThread isInterrupted))
+      (let [reply (zmq/receive socket)]
+        (println "Received Hello")
+        ;; Do some work
+        (Thread/sleep 1000)
+        (zmq/send-str socket "World")))))
