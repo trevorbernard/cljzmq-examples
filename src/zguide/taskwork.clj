@@ -3,12 +3,11 @@
 ;; Connects PUSH socket to tcp://localhost:5558
 ;; Sends results to sink via that socket
 
-(print)
 (ns zguide.taskwork
   (:require [zeromq.zmq :as zmq]))
 
 (defn -main []
-  (let [context (zmq/context 1)]
+  (let [context (zmq/zcontext 1)]
     (with-open [receiver (doto (zmq/socket context :pull)
                            (zmq/connect "tcp://127.0.0.1:5557"))
                 sender (doto (zmq/socket context :push)

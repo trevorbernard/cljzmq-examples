@@ -12,7 +12,7 @@
     workload))
 
 (defn -main []
-  (let [context (zmq/context 1)]
+  (let [context (zmq/zcontext 1)]
     (println "Press Enter when the workers are ready: ")
     (read-line)
     (println "Sending tasks to workers…")
@@ -22,4 +22,4 @@
                        (zmq/connect "tcp://127.0.0.1:5558"))]
       (zmq/send-str sink "0")
       (let [times (repeatedly 100 (partial work sender))]
-        (println "Total expected cost: %d msec\n" (apply + times))))))
+        (printf "Total expected cost: %d msec\n" (apply + times))))))

@@ -5,7 +5,7 @@
   (:require [zeromq.zmq :as zmq]))
 
 (defn -main []
-  (let [context (zmq/context 1)]
+  (let [context (zmq/zcontext 1)]
     (with-open [receiver (doto (zmq/socket context :pull)
                            (zmq/bind "tcp://*:5558"))]
       ;; Wait for start of batch
