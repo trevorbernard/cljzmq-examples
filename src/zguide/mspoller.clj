@@ -15,7 +15,7 @@
       (zmq/register poller receiver :pollin)
       (zmq/register poller subscriber :pollin)
       (while (not (.. Thread currentThread isInterrupted))
-        (zmq/poll)
+        (zmq/poll poller)
         (when (zmq/check-poller poller 0 :pollin)
           (let [msg (zmq/receive receiver)]
             ;; Process task
